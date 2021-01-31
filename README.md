@@ -1,0 +1,2 @@
+# calmaker
+Generates calendar meetings
