@@ -3,7 +3,6 @@
   <head>
     <script src="calmaker.js"></script>
     <script src="generator.js"></script>    
-    <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="generator.css">
     <title>Calmaker</title>
@@ -33,19 +32,16 @@
         <label for="event-description"></label>
         <textarea name="textarea" rows="10" cols="50" placeholder="Description" id="event-description"></textarea>
 
-        <label for="event-id">Custom CSS ID:</label>
-        <input type="text" name="event-id" id="event-id">
-
-        <label for="event-class">Custom CSS Class:</label>
-        <input type="text" name="event-class" id="event-class">
-
         <input type="submit" value="Generate Calendar" />
       </form>
 
       <h2>Your result will appear below</h2>
 
       <div id="live-example"></div>
-      <div id="html-result"></div>
+      <div id="html-result">
+          <p class="instructions">Copy and paste this code:</p>
+          <textarea id="embed-text" rows="15" cols="80"></textarea>
+      </div>
     </div>
     
   </body>
