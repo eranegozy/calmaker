@@ -1,4 +1,5 @@
-document.getElementById('calendar-generator').onsubmit = function() {
+
+var onGenerate = function() {
 
   // Get values for the calendar
   var title       = document.getElementById('event-title').value;
@@ -49,3 +50,10 @@ document.getElementById('calendar-generator').onsubmit = function() {
 
   return false;
 };
+
+var attachOnSubmit = function() {
+  console.log('attachOnSubmit')
+  document.getElementById('calendar-generator').onsubmit = onGenerate;
+}
+
+window.onload = attachOnSubmit;
