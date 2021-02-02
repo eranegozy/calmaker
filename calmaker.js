@@ -30,7 +30,7 @@
         '&dates=' + (startTime || ''),
         '/' + (endTime || ''),
         '&details=' + (event.description || ''),
-        '&location=' + (event.address || ''),
+        '&location=' + (event.location || ''),
         '&sprop=&sprop=name:'
       ].join(''));
 
@@ -64,7 +64,7 @@
         '&st=' + st,
         '&dur=' + (yahooEventDuration || ''),
         '&desc=' + (event.description || ''),
-        '&in_loc=' + (event.address || '')
+        '&in_loc=' + (event.location || '')
       ].join(''));
 
       var html = `<a target="_blank" href="${href}"><img style="${iconStyle}" src="${yahooIconURL}">Yahoo Calendar</a>`;
@@ -75,6 +75,8 @@
       var startTime = formatTime(event.start);
       var endTime = calculateEndTime(event);
 
+      var description = event.description.replace(/\n/g, "\\n");
+
       var href = encodeURI(
         'data:text/calendar;charset=utf8,' + [
           'BEGIN:VCALENDAR',
@@ -83,8 +85,8 @@
           'DTSTART:' + (startTime || ''),
           'DTEND:' + (endTime || ''),
           'SUMMARY:' + (event.title || ''),
-          'DESCRIPTION:' + (event.description || ''),
-          'LOCATION:' + (event.address || ''),
+          'DESCRIPTION:' + (description || ''),
+          'LOCATION:' + (event.location || ''),
           'END:VEVENT',
           'END:VCALENDAR'].join('\n'));
 
@@ -113,9 +115,21 @@
 
 
   // Make sure we have the necessary event data, such as start time and event duration
-  var validParams = function(params) {
-    return params.data !== undefined && params.data.start !== undefined &&
-      (params.data.end !== undefined || params.data.duration !== undefined);
+  var validateParams = function(params) {
+    if (!params.start)
+      params.start = new Date();
+
+    if (!params.end)
+      params.end = new Date(Date.parse(params.start) + 1000 * 3600);
+
+    if (!params.title)
+      params.title = 'New Event';
+
+    if (!params.location)
+      params.location = '';
+
+    if (!params.description)
+      params.description = '';
   };
 
   var generateMarkup = function(calendars, clazz, calendarId) {
@@ -134,11 +148,7 @@
   };
 
   exports.createCalendar = function(params) {
-    if (!validParams(params)) {
-      console.log('Event details missing.');
-      return;
-    }
-
-    return generateMarkup(generateCalendars(params.data));
+    validateParams(params);
+    return generateMarkup(generateCalendars(params));
   };
 })(this);

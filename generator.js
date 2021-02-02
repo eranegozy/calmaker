@@ -3,34 +3,22 @@ var onGenerate = function() {
 
   // Get values for the calendar
   var title       = document.getElementById('event-title').value;
-  var startString = document.getElementById('start-time').value;
-  var start       = new Date(startString.replace(/-/g, ",").replace(/T/, " "));
-  var endString   = document.getElementById('end-time').value;
-  var end         = new Date(endString.replace(/-/g, ",").replace(/T/, " "));
-  var address     = document.getElementById('event-address').value;
+  var start       = document.getElementById('start-time').value;
+  var end         = document.getElementById('end-time').value;
+  var location    = document.getElementById('event-location').value;
   var description = document.getElementById('event-description').value;
 
+  if (start)
+    start = new Date(start.replace(/-/g, ",").replace(/T/, " "));
+  if (end)
+    end = new Date(end.replace(/-/g, ",").replace(/T/, " "));
 
-  // Dummy test data for faster testing
-  // start = new Date();
-  // end = new Date();
-  // title = 'Test Title'
-
-  // Make sure basic info is passed in
-  if (!(title && start && end)) {
-    console.log('Add some details');
-    return false;
-  }
-
-  // Create the calendar
   var myCalendar = createCalendar({
-    data: {
-      title: title,
-      start: start,
-      end: end,
-      address: address,
-      description: description
-    }
+    title: title,
+    start: start,
+    end: end,
+    location: location,
+    description: description,
   });
 
   // Add the calendar result and an example
@@ -48,7 +36,6 @@ var onGenerate = function() {
 };
 
 var attachOnSubmit = function() {
-  console.log('attachOnSubmit')
   document.getElementById('calendar-generator').onsubmit = onGenerate;
 }
 
