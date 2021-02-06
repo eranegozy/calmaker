@@ -1,4 +1,6 @@
 (function(exports) {
+  var globalScripts = [];
+
   var MS_IN_MINUTES = 60 * 1000;
 
   var formatTime = function(date) {
@@ -71,10 +73,10 @@
       return html;
     },
 
+
     ics: function(event, iconURL, calendarName) {
       var startTime = formatTime(event.start);
       var endTime = calculateEndTime(event);
-
       var description = event.description.replace(/\n/g, "\\n");
 
       var href = encodeURI(
@@ -90,7 +92,13 @@
           'END:VEVENT',
           'END:VCALENDAR'].join('\n'));
 
-      var html = `<button onclick="window.location.href='${href}'"><img style="${iconStyle}" src="${iconURL}">${calendarName}</button>`;
+
+      var id = Math.round(Math.random() * 1000000000); // create a random / unique ID
+      var html = `<a id="${id}" href="${href}"><img style="${iconStyle}" src="${iconURL}">${calendarName}</a>`;
+
+      // global script to force href into this <a> tag, because shoppify strips away data hrefs. grrr.
+      globalScripts.push(`document.getElementById('${id}').href="${href}"`);
+
       return html;
     },
 
@@ -132,7 +140,7 @@
       params.description = '';
   };
 
-  var generateMarkup = function(calendars, clazz, calendarId) {
+  var generateMarkup = function(calendars, scripts) {
     var result = document.createElement('div');
     var html = '<div><ul style="list-style: none;">'
 
@@ -140,7 +148,12 @@
       html +=  '<li style="margin: 15px;">' +  calendars[services] + '</li>';
     });
 
-    html += '</ul></div>';
+    html += '</ul></div>\n';
+
+    // add any global scripts generated
+    for (var i = 0; i < scripts.length; i++) {
+      html += `<script>${scripts[i]}</script>\n`;
+    }
 
     result.innerHTML = html;
 
@@ -149,6 +162,9 @@
 
   exports.createCalendar = function(params) {
     validateParams(params);
-    return generateMarkup(generateCalendars(params));
+    globalScripts = [];
+    var calData = generateCalendars(params);
+    return generateMarkup(calData, globalScripts);
   };
+
 })(this);
