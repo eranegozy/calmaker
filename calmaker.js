@@ -15,10 +15,10 @@
 
   // icons data:
   var iconStyle      = 'width:30px;height:30px;vertical-align:middle;margin-right:5px;';
-  var googleIconURL  = 'https://cdn.worldvectorlogo.com/logos/google-icon.svg';
-  var yahooIconURL   = 'https://s.yimg.com/cv/apiv2/default/icons/favicon_y19_32x32_custom.svg';
-  var appleIconURL   = 'https://www.svgrepo.com/show/69341/apple-logo.svg';
-  var outlookIconURL = 'https://upload.wikimedia.org/wikipedia/commons/4/48/Outlook.com_icon.svg';
+  var googleIconURL  = 'https://cdn.shopify.com/s/files/1/0078/2716/1145/files/google-icon.png';
+  var yahooIconURL   = 'https://cdn.shopify.com/s/files/1/0078/2716/1145/files/yahoo-icon.png';
+  var appleIconURL   = 'https://cdn.shopify.com/s/files/1/0078/2716/1145/files/apple-icon.png';
+  var outlookIconURL = 'https://cdn.shopify.com/s/files/1/0078/2716/1145/files/outlook-icon.png';
 
   var calendarGenerators = {
     google: function(event) {

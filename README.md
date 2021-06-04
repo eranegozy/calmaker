@@ -6,3 +6,7 @@ Calmaker was forked / modified from https://github.com/carlsednaoui/add-to-calen
 
 Site is hosted here: https://eranegozy.github.io/calmaker/
 
+To test locally:
+
+`python3 -m http.server` and then open `localhost:8000`
+
